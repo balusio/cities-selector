@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { API_URL } from 'core/constants';
-import { Button } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import GetDataHook from 'core/dataHook';
-import cleanCache from 'utils/cleanCache';
+import ExploreIcon from '@material-ui/icons/Explore';
+
+import styles from './AppStyles';
 
 const url = `${API_URL}cities?offset=0&limit=100`;
+const useStyles = makeStyles(styles);
 
 const App = (): JSX.Element => {
   const { isLoading, response, error } = GetDataHook({ url });
+  const classes = useStyles();
   if (isLoading) {
     console.log('loading');
   }
@@ -22,14 +25,15 @@ const App = (): JSX.Element => {
   }, [response]);
 
   return (
-    <>
-      <h1>
-        hello
-      </h1>
-      <Button>
-        test
-      </Button>
-    </>
+    <div className={classes.container}>
+      <div className={classes.searchContainer}>
+        <Typography variant="h3">
+          Cities finder  <ExploreIcon fontSize="large" />
+        </Typography>
+      </div>
+      {/* <SearchBar onValueChange={onValueChange} />
+      <List /> */}
+    </div>
   );
 };
 

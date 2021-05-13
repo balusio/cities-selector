@@ -18,10 +18,12 @@ const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => 
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const cacheVersion = 'requestList-v1';
+
   const request = new Request(
     url,
     options,
   );
+
   const getcacheAPI = async () => {
     const cache = await caches.open(cacheVersion);
     const responseCache = await cache.match(request);
