@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ApiResponse } from 'types/index';
 
 type DataHookParams = {
   url: string;
@@ -15,7 +16,7 @@ type DataHookParams = {
 const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => {
   const [error, setError] = useState<Error | undefined>();
   const [isLoading, setIsLoading] = useState(true);
-  const [response, setResponse] = useState<Response | null>(null);
+  const [response, setResponse] = useState<ApiResponse | null>(null);
   const request = new Request(
     url,
     options,
