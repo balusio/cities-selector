@@ -7,6 +7,11 @@ const AppStyles = (): StyleRules => createStyles({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
+    textAlign: 'center',
+  },
+  searchContainer: {
+    width: '100%',
+    maxWidth: '40vw',
   },
 });
 

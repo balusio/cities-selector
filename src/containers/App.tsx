@@ -3,6 +3,7 @@ import { API_URL } from 'core/constants';
 import { makeStyles, Typography } from '@material-ui/core';
 import GetDataHook from 'core/dataHook';
 import ExploreIcon from '@material-ui/icons/Explore';
+import SearchBar from 'components/SearchBar/SearchBar';
 
 import styles from './AppStyles';
 
@@ -30,9 +31,9 @@ const App = (): JSX.Element => {
         <Typography variant="h3">
           Cities finder  <ExploreIcon fontSize="large" />
         </Typography>
+        <SearchBar />
       </div>
-      {/* <SearchBar onValueChange={onValueChange} />
-      <List /> */}
+
     </div>
   );
 };
