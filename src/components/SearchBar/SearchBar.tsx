@@ -11,10 +11,10 @@ const SearchBar = () : JSX.Element => {
   const [typing, setTyping] = useState<boolean>(false);
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>): void => {
     setTyping(true);
-    if (e.currentTarget.value !== value) {
-      setValue(e.currentTarget.value);
+    if (e.target.value !== value) {
+      setValue(e.target.value);
     }
-    if (e.currentTarget.value === '') {
+    if (e.target.value === '') {
       setTyping(false);
     }
   };
