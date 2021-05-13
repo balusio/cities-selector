@@ -25,7 +25,7 @@ module.exports = {
       assets: path.resolve(__dirname, 'src/assets/'),
       core: path.resolve(__dirname, 'src/core/'),
       utils: path.resolve(__dirname, 'src/utils/'),
-      utils: path.resolve(__dirname, 'src/types/'),
+      types: path.resolve(__dirname, 'src/types/'),
     },
   },
 

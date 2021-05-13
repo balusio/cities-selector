@@ -17,16 +17,19 @@ const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => 
   const [error, setError] = useState<Error | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<ApiResponse | null>(null);
+  const cacheVersion = 'requestList-v1';
   const request = new Request(
     url,
     options,
   );
   const getcacheAPI = async () => {
-    const cache = await caches.open('requestList');
+    const cache = await caches.open(cacheVersion);
     const responseCache = await cache.match(request);
-    const { data } = await (await responseCache?.json());
-    if (data && data.length > 0) {
-      return data;
+    if (responseCache) {
+      const { data } = await (await responseCache?.json());
+      if (data && data.length > 0) {
+        return data;
+      }
     }
 
     return false;
@@ -34,14 +37,13 @@ const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => 
 
   const apiCall = async () => {
     try {
-      const cache = await caches.open('requestList');
+      const cache = await caches.open(cacheVersion);
       const queryResponse = await fetch(request);
-
       if (queryResponse?.ok && queryResponse?.status === 200) {
-        const queryResult = await (await queryResponse.json());
+        const queryResult = await (await queryResponse.clone().json());
         setResponse(queryResult.data);
-        cache.put(request, queryResult);
         setIsLoading(false);
+        cache.put(request, queryResponse);
       }
     } catch {
       setError({
@@ -54,15 +56,16 @@ const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => 
 
   useEffect(() => {
     setIsLoading(true);
-    const localData = getcacheAPI();
-    if (localData) {
-      localData.then((data) => {
+    const getData = async () => {
+      const localData = await getcacheAPI();
+      if (localData) {
         setIsLoading(false);
-        setResponse(data);
-      });
-    } else {
-      apiCall();
-    }
+        setResponse(localData);
+      } else {
+        apiCall();
+      }
+    };
+    getData();
   }, [url]);
 
   return {
