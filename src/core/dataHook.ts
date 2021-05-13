@@ -28,7 +28,7 @@ const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => 
     const cache = await caches.open(cacheVersion);
     const responseCache = await cache.match(request);
     if (responseCache) {
-      const { data } = await (await responseCache?.json());
+      const data = await (await responseCache?.json());
       if (data && data.length > 0) {
         return data;
       }
@@ -43,7 +43,7 @@ const GetDataHook = ({ url, options = {}, noCache = false }: DataHookParams) => 
       const queryResponse = await fetch(request);
       if (queryResponse?.ok && queryResponse?.status === 200) {
         const queryResult = await (await queryResponse.clone().json());
-        setResponse(queryResult.data);
+        setResponse(queryResult);
         setIsLoading(false);
         cache.put(request, queryResponse);
       }

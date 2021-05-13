@@ -9,6 +9,7 @@ const SearchBar = () : JSX.Element => {
   const classes = useStyles();
   const [value, setValue] = useState<string>('');
   const [typing, setTyping] = useState<boolean>(false);
+
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>): void => {
     setTyping(true);
     if (e.target.value !== value) {
@@ -29,7 +30,9 @@ const SearchBar = () : JSX.Element => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="start">
-            <LocationSearchingIcon className={(typing ? `${classes.searchingAnimation}` : classes.findingIcon)} />
+            <LocationSearchingIcon 
+              className={(typing ? `${classes.searchingAnimation}` : classes.findingIcon)} 
+            />
           </InputAdornment>
         ),
       }}

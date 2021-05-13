@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { API_URL } from 'core/constants';
 import { makeStyles, Typography } from '@material-ui/core';
 import GetDataHook from 'core/dataHook';
@@ -6,11 +6,15 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import SearchBar from 'components/SearchBar/SearchBar';
 
 import styles from './AppStyles';
+import CitiesList from 'components/CitiesList/CitiesList';
+import { CityInfo } from 'types';
 
 const url = `${API_URL}cities?offset=0&limit=100`;
 const useStyles = makeStyles(styles);
 
 const App = (): JSX.Element => {
+  const [cities, setCities] = useState<CityInfo[]>([]);
+
   const { isLoading, response, error } = GetDataHook({ url });
   const classes = useStyles();
   if (isLoading) {
@@ -22,7 +26,9 @@ const App = (): JSX.Element => {
   }
 
   useEffect(() => {
-    console.log(response);
+    if (response?.data) {
+      setCities(response?.data);
+    }
   }, [response]);
 
   return (
@@ -32,6 +38,7 @@ const App = (): JSX.Element => {
           Cities finder  <ExploreIcon fontSize="large" />
         </Typography>
         <SearchBar />
+        <CitiesList cities={cities} />
       </div>
 
     </div>
